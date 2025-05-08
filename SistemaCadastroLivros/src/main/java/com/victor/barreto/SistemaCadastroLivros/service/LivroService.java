@@ -34,17 +34,30 @@ public class LivroService {
         livroRepository.deleteById(id);
     }
 
-    //Atualizar Livro pelo id
+
+    //Atualizar Livro pelo id -> Parte 01
     public LivroModel update(Long id, LivroModel obj) {
         LivroModel entity = livroRepository.getReferenceById(id);
         updateData(entity, obj);
         return livroRepository.save(entity);
     }
 
+    // Atualizar Livro pelo id- > Parte 02
     private void updateData(LivroModel entity, LivroModel obj) {
-        entity.setAutor(obj.getAutor());
+        //entity.setAutor(obj.getAutor());
         entity.setTitulo(obj.getTitulo());
-        entity.setAnoPublicacao(obj.getAnoPublicacao());
+        //entity.setAnoPublicacao(obj.getAnoPublicacao());
         entity.setPreco(obj.getPreco());
+    }
+
+    //Buscar pelo nome do Livro
+    public LivroModel findByTitulo(String titulo) {
+        Optional<LivroModel> obj = livroRepository.findByTitulo(titulo);
+        return obj.get();
+    }
+
+    //Buscar por Categoria, editora, faixa de preço
+    public List<LivroModel> buscarComFiltros(Long categoriaId, Long editoraId, Double precoMin, Double precoMax) {
+        return livroRepository.buscarComFiltros(categoriaId, editoraId, precoMin, precoMax);
     }
 }

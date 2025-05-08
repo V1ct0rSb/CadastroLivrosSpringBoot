@@ -49,4 +49,20 @@ public class LivroController {
         return ResponseEntity.ok().body(obj);
     }
 
+    //Buscar pelo Titulo do Livro
+    @GetMapping(value = "/titulo/{titulo}")
+    public ResponseEntity<LivroModel> findByTitulo(@PathVariable String titulo) {
+        LivroModel obj = livroService.findByTitulo(titulo);
+        return ResponseEntity.ok().body(obj);
+    }
+
+    //Buscar por Categoria, editora, faixa de preço
+    @GetMapping("/filtros")
+    public ResponseEntity<List<LivroModel>> buscaComFiltro(@RequestParam(required = false) Long categoriaId,
+                                                           @RequestParam(required = false) Long editoraId,
+                                                           @RequestParam(required = false) Double precoMin,
+                                                           @RequestParam(required = false) Double precoMax) {
+        List<LivroModel> livros = livroService.buscarComFiltros(categoriaId, editoraId, precoMin, precoMax);
+        return ResponseEntity.ok().body(livros);
+    }
 }
